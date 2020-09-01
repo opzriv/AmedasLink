@@ -165,10 +165,11 @@ window.onload = function() {
     var block_no = ameTable["block_no"][amedasID];
 
     // 日付情報（昨日の）
-    var kyou = new Date();
-    var year = kyou.getFullYear();
-    var month = kyou.getMonth() + 1;
-    var day = kyou.getDate() - 1;
+    var kinou = new Date();  // 今日
+    kinou.setDate(kinou.getDate() - 1) // 昨日
+    var year = kinou.getFullYear();
+    var month = kinou.getMonth() + 1;
+    var day = kinou.getDate();
 
     // リンクを追加
     var kakoA = document.createElement('a');

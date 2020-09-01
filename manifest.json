@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
     "name": "アメドス",
-    "version": "1.0.0",
-    "description": "気象庁HPのアメダス(表形式)の機能を向上させます",
+    "version": "1.0.1",
+    "description": "気象庁HPのアメダスページの機能を向上させます",
     "icons": {
         "16": "icons/icon16.png",
         "48": "icons/icon48.png",
