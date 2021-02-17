@@ -1,16 +1,16 @@
 // Tableからデータ抜き取り。連想配列に。
 function getData(table) {
-    var keys = [];
-    for (var key of table.rows[0].cells) keys.push(key.textContent);
-    
-    var data = {};
-    for (var key of keys) data[key] = [];
+    let keys = [];
+    for (let key of table.rows[0].cells) keys.push(key.textContent);
 
-    var rowCount = table.rows.length;
-    for (var i=2; i<rowCount; i++) {
-        var tr = table.rows[i];
-        for (var j=0; j<keys.length; j++) {
-            var val = parseFloat(tr.cells[j].textContent);
+    let data = {};
+    for (let key of keys) data[key] = [];
+
+    let rowCount = table.rows.length;
+    for (let i=2; i<rowCount; i++) {
+        let tr = table.rows[i];
+        for (let j=0; j<keys.length; j++) {
+            let val = parseFloat(tr.cells[j].textContent);
             data[keys[j]].push(val);
         }
     }
@@ -19,8 +19,8 @@ function getData(table) {
 
 // 軸用に気温の最大値最小値を取得
 function getMinMax(arr) {
-    var minT=100.0, maxT=-100;
-    for (var t of arr) {
+    let minT=100.0, maxT=-100;
+    for (let t of arr) {
         minT = t < minT ? t : minT;
         maxT = t > maxT ? t : maxT;
     }
@@ -34,17 +34,17 @@ window.onload = function() {
      */
 
     // canvasタグ
-    var mainCanvas = document.createElement("canvas");
+    let mainCanvas = document.createElement("canvas");
     mainCanvas.id = 'myChart';
-    var deepTable = document.getElementById('tbl_list');
+    let deepTable = document.getElementById('tbl_list');
     deepTable.insertAdjacentElement('beforebegin', mainCanvas);
 
     // 薄いほうのdocument取得
-    var paleTable;
-    var xhr = new XMLHttpRequest();
+    let paleTable;
+    let xhr = new XMLHttpRequest();
 
-    var method = 'GET';
-    var target;
+    let method = 'GET';
+    let target;
     if (document.URL.match('today')) {
         target = document.URL.replace('today', 'yesterday');
         dayOfLabelDeep = '今日';
@@ -54,10 +54,10 @@ window.onload = function() {
         dayOfLabelDeep = '昨日';
         dayOfLabelPale = '今日';
     }
-    var async = true;
-    
+    let async = true;
+
     xhr.open(method, target, async);
-    
+
     xhr.responseType = 'document';
     xhr.onload = function(e) {
       if (this.status === 200) {
@@ -70,18 +70,18 @@ window.onload = function() {
     xhr.send();
 
     function callback() {
-        var deepData = getData(deepTable);
-        var paleData = getData(paleTable);
+        let deepData = getData(deepTable);
+        let paleData = getData(paleTable);
 
         // Dataset作成
-        var Dataset = [{
+        let Dataset = [{
             label: `降水量(${dayOfLabelDeep})`,
             data: deepData.降水量,
             borderColor: "rgba(0,0,255,1)",
             backgroundColor: "rgba(0,0,255,0.5)",
             yAxisID: "y-axis-2"
         }];
-        var YAxes = [{
+        let YAxes = [{
             id: "y-axis-2",
             position: "right",
             ticks: {
@@ -114,7 +114,7 @@ window.onload = function() {
                 backgroundColor: "rgba(0,0,0,0)",
                 yAxisID: "y-axis-1"
             });
-            var {minT, maxT} = getMinMax(deepData.気温.concat(paleData.気温));
+            let {minT, maxT} = getMinMax(deepData.気温.concat(paleData.気温));
             YAxes.unshift({
                 id: "y-axis-1",
                 ticks: {
@@ -127,11 +127,11 @@ window.onload = function() {
                 }
             });
         }
-    
+
         // グラフ表示
-        var ctx = document.getElementById("myChart").getContext("2d");
-        
-        var myChart = new Chart(ctx, {
+        let ctx = document.getElementById("myChart").getContext("2d");
+
+        let myChart = new Chart(ctx, {
             type: "bar",
             data: {
                 labels: deepData.時刻,
@@ -160,24 +160,24 @@ window.onload = function() {
      */
 
      // 地点情報
-    var amedasID = document.URL.split('-')[1].split('.')[0];
-    var prec_no = ameTable["prec_no"][amedasID];
-    var block_no = ameTable["block_no"][amedasID];
+    let amedasID = document.URL.split('-')[1].split('.')[0];
+    let prec_no = ameTable["prec_no"][amedasID];
+    let block_no = ameTable["block_no"][amedasID];
 
     // 日付情報（昨日の）
-    var kinou = new Date();  // 今日
+    let kinou = new Date();  // 今日
     kinou.setDate(kinou.getDate() - 1) // 昨日
-    var year = kinou.getFullYear();
-    var month = kinou.getMonth() + 1;
-    var day = kinou.getDate();
+    let year = kinou.getFullYear();
+    let month = kinou.getMonth() + 1;
+    let day = kinou.getDate();
 
     // リンクを追加
-    var kakoA = document.createElement('a');
+    let kakoA = document.createElement('a');
     kakoA.href = `https://www.data.jma.go.jp/obd/stats/etrn/index.php?prec_no=${prec_no}&block_no=${block_no}&year=${year}&month=${month}&day=${day}&view=`;
     kakoA.target = "_blank"
     kakoA.innerText = '過去の観測データ';
     kakoA.classList.add('kako');
-    var td_subtitle = document.getElementsByClassName('td_subtitle')[0];
+    let td_subtitle = document.getElementsByClassName('td_subtitle')[0];
     td_subtitle.appendChild(kakoA);
     // 整形
     td_subtitle.children[0].insertAdjacentElement(
