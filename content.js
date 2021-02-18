@@ -15,18 +15,10 @@ function getData(table) {
   return res;
 }
 
-window.onload = function () {
-  /**
-   * グラフ作成
-   */
-
-  // canvasタグ
-  let mainCanvas = document.createElement("canvas");
-  mainCanvas.id = 'myChart';
+function showGraph() {
+  // データ取得
+  // 濃い薄い = 今日または昨日
   let deepTable = document.getElementById('tbl_list');
-  deepTable.insertAdjacentElement('beforebegin', mainCanvas);
-
-  // 薄いほうのdocument取得
   let paleTable;
   let xhr = new XMLHttpRequest();
 
@@ -60,7 +52,6 @@ window.onload = function () {
     let deepData = getData(deepTable);
     let paleData = getData(paleTable);
 
-    // Dataset作成
     let Dataset = [{
       label: `降水量(${dayOfLabelDeep})`,
       data: deepData.降水量,
@@ -113,7 +104,9 @@ window.onload = function () {
     }
 
     // グラフ表示
-    let ctx = document.getElementById("myChart").getContext("2d");
+    let mainCanvas = document.createElement("canvas");
+    deepTable.insertAdjacentElement('beforebegin', mainCanvas);
+    let ctx = mainCanvas.getContext("2d");
 
     let myChart = new Chart(ctx, {
       type: "bar",
@@ -137,12 +130,9 @@ window.onload = function () {
       }
     });
   };
+}
 
-
-  /**
-   * 過去の気象データ検索へリンク
-   */
-
+function showLinkPast() {
   // 地点情報
   let amedasID = document.URL.split('-')[1].split('.')[0];
   let prec_no = ameTable["prec_no"][amedasID];
@@ -163,7 +153,13 @@ window.onload = function () {
   kakoA.classList.add('kako');
   let td_subtitle = document.getElementsByClassName('td_subtitle')[0];
   td_subtitle.appendChild(kakoA);
+
   // 整形
   td_subtitle.children[0].insertAdjacentElement(
     "afterbegin", document.createElement('br'));
+}
+
+window.onload = function () {
+  showGraph();
+  showLinkPast();
 };
