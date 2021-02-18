@@ -15,17 +15,6 @@ function getData(table) {
   return res;
 }
 
-// 軸用に気温の最大値最小値を取得
-function getMinMax(arr) {
-  let minT = 100.0, maxT = -100;
-  for (let t of arr) {
-    minT = t < minT ? t : minT;
-    maxT = t > maxT ? t : maxT;
-  }
-  return { minT, maxT }
-}
-
-
 window.onload = function () {
   /**
    * グラフ作成
@@ -112,12 +101,9 @@ window.onload = function () {
           backgroundColor: "rgba(0,0,0,0)",
           yAxisID: "y-axis-1"
         });
-      let { minT, maxT } = getMinMax(deepData.気温.concat(paleData.気温));
       YAxes.unshift({
         id: "y-axis-1",
         ticks: {
-          suggestedMax: maxT,
-          suggestedMin: minT,
           stepSize: 5,
           callback: function (value, index, values) {
             return value + '℃'
