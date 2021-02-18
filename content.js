@@ -1,20 +1,18 @@
 // Tableからデータ抜き取り。連想配列に。
+// {気温: [10, 11, 10]}みたいな
 function getData(table) {
-  let keys = [];
-  for (let key of table.rows[0].cells) keys.push(key.textContent);
-
-  let data = {};
-  for (let key of keys) data[key] = [];
-
+  let res = {};
   let rowCount = table.rows.length;
-  for (let i = 2; i < rowCount; i++) {
-    let tr = table.rows[i];
-    for (let j = 0; j < keys.length; j++) {
-      let val = parseFloat(tr.cells[j].textContent);
-      data[keys[j]].push(val);
+  let colCount = table.rows[0].cells.length;
+
+  for (let j = 0; j < colCount; j++) {
+    let vals = []
+    for (let i = 2; i < rowCount; i++) {
+      vals.push(parseFloat(table.rows[i].cells[j].textContent));
     }
+    res[table.rows[0].cells[j].textContent] = vals;
   }
-  return data;
+  return res;
 }
 
 // 軸用に気温の最大値最小値を取得
