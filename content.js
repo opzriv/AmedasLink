@@ -23,17 +23,17 @@ function showGraph() {
   let xhr = new XMLHttpRequest();
 
   let method = 'GET';
-  let target;
+  let async = true;
+  let target, dayDeep, dayPale;
   if (document.URL.match('today')) {
     target = document.URL.replace('today', 'yesterday');
-    dayOfLabelDeep = '今日';
-    dayOfLabelPale = '昨日';
+    dayDeep = '今日';
+    dayPale = '昨日';
   } else {
     target = document.URL.replace('yesterday', 'today');
-    dayOfLabelDeep = '昨日';
-    dayOfLabelPale = '今日';
+    dayDeep = '昨日';
+    dayPale = '今日';
   }
-  let async = true;
 
   xhr.open(method, target, async);
 
@@ -53,7 +53,7 @@ function showGraph() {
     let paleData = getData(paleTable);
 
     let Dataset = [{
-      label: `降水量(${dayOfLabelDeep})`,
+      label: `降水量(${dayDeep})`,
       data: deepData.降水量,
       borderColor: "rgba(0,0,255,1)",
       backgroundColor: "rgba(0,0,255,0.5)",
@@ -77,7 +77,7 @@ function showGraph() {
     if ('気温' in deepData) {
       // pushでなくてunshiftなのはグラフの重なり順による
       Dataset.unshift({
-        label: `気温(${dayOfLabelDeep})`,
+        label: `気温(${dayDeep})`,
         type: "line",
         data: deepData.気温,
         borderColor: "rgba(255,50,60,0.9)",
@@ -85,7 +85,7 @@ function showGraph() {
         yAxisID: "y-axis-1"
       },
         {
-          label: `気温(${dayOfLabelPale})`,
+          label: `気温(${dayPale})`,
           type: "line",
           data: paleData.気温,
           borderColor: "rgba(255,50,60,0.4)",
