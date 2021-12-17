@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "AmedasLink",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "気象庁HPのアメダスページに各種リンクを追加します",
     "icons": {
         "16": "icons/icon16.png",
