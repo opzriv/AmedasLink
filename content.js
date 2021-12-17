@@ -17,8 +17,8 @@ function showLinkPast() {
   kakoA.target = "_blank"
   kakoA.innerText = '過去の観測データ';
 
-  let locationEl = document.getElementById("amd-controller");
-  locationEl.insertAdjacentElement("afterend", kakoA);
+  let targetElm = document.getElementById("amd-controller");
+  targetElm.insertAdjacentElement("afterend", kakoA);
 }
 
 showLinkPast();
